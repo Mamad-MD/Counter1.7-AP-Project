@@ -55,3 +55,35 @@ void Gun::readGunInfo() const {
         << "Damage per bullet: " << damagePerBullet << "\n"
         << "Price: $" << price << std::endl;
 }
+
+Gun Gun::createGun(int bullets, float price, GunType type, float damage) {
+    return Gun(bullets, price, type, damage);
+}
+
+int Gun::getBulletCount() const { return bulletCount; }
+float Gun::getPrice() const { return price; }
+GunType Gun::getType() const { return type; }
+float Gun::getDamagePerBullet() const { return damagePerBullet; }
+int Gun::getId() const { return gunId; }
+int Gun::getTotalGunsCreated() { return totalGunsCreated; }
+
+Gun& Gun::operator=(const Gun& other) {
+    if (this != &other) {
+        bulletCount = other.bulletCount;
+        price = other.price;
+        type = other.type;
+        damagePerBullet = other.damagePerBullet;
+    }
+    return *this;
+}
+
+bool Gun::operator==(const Gun& other) const {
+    return (bulletCount == other.bulletCount &&
+        price == other.price &&
+        type == other.type &&
+        damagePerBullet == other.damagePerBullet);
+}
+
+bool Gun::operator!=(const Gun& other) const {
+    return !(*this == other);
+}

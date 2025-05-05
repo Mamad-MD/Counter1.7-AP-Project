@@ -26,6 +26,18 @@ void Terrorist::setBombCarrier(bool status) {
     }
 }
 
+bool Terrorist::getBombCarrierStatus() const {
+    return isBombCarrier;
+}
+
+bool Terrorist::getBombPlantStatus() const {
+    return hasPlantedBomb;
+}
+
+std::string Terrorist::getTeam() const {
+    return "Terrorist";
+}
+
 void Terrorist::displayInfo() const {
     Player::displayInfo();
     std::cout << "Bomb Carrier: " << (isBombCarrier ? "Yes" : "No") << "\n"
@@ -34,6 +46,5 @@ void Terrorist::displayInfo() const {
 
 float Terrorist::calculatePower() const {
     float basePower = Player::calculatePower();
-    // Terrorists get a small bonus if carrying the bomb
     return isBombCarrier ? basePower * 1.15f : basePower;
 }

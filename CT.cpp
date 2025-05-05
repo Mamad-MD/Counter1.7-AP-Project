@@ -9,6 +9,9 @@ CT::CT(const std::string& name, bool isAI, float initialMoney)
 CT::CT(const CT& other)
     : Player(other), hasDefuseKit(other.hasDefuseKit), hasDefusedBomb(other.hasDefusedBomb) {}
 
+std::string CT::getTeam() const {
+    return "Counter-Terrorist";
+}
 void CT::defuseBomb() {
     if (hasDefuseKit && isAlive) {
         hasDefusedBomb = true;
@@ -33,6 +36,7 @@ void CT::displayInfo() const {
 
 float CT::calculatePower() const {
     float basePower = Player::calculatePower();
-    // CTs get a small bonus if they have defuse kit
-    return hasDefuseKit ? basePower * 1.1f : basePower;
+    if (hasDefuseKit) basePower += 10;
+    if (hasDefusedBomb) basePower += 20;
+    return basePower;
 }

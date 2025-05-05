@@ -1,5 +1,8 @@
 #include <iostream>
 #include <memory>
+#include <direct.h> 
+#include <cassert>
+#include <sys/stat.h>
 #include "GameManager.h"
 #include "AuthSystem.h"
 #include "MenuSystem.h"
@@ -13,7 +16,7 @@ void runTests() {
     assert(ak47.getTypeAsString() == "AK-47");
 
     // Test Player damage
-    Player player("TestPlayer", false, 1000.0f);
+    CT player("TestPlayer", false, 1000.0f);
     player.takeDamage(50.0f);
     assert(player.isPlayerAlive());
     player.takeDamage(60.0f);
@@ -23,6 +26,10 @@ void runTests() {
 }
 
 int main() {
+    struct stat info;
+    if (stat("users", &info) != 0) {
+        _mkdir("users");
+    }
     // Initialize systems
     auto gameManager = GameManager::getInstance();
     auto authSystem = std::make_shared<AuthSystem>();

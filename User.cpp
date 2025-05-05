@@ -1,8 +1,10 @@
-#include "User.h"
+﻿#include "User.h"
 #include <fstream>
 #include <sstream>
 #include <iomanip>
-#include <openssl/sha.h>
+#include <openssl/evp.h>
+#include <iostream>  // اضافه کردن هدر iostream برای استفاده از std::cerr
+#include <iostream>  // برای استفاده از std::cerr
 
 User::User() : username(""), nickname(""), passwordHash(""), winsCount(0), teamPreference("") {}
 
@@ -58,16 +60,46 @@ void User::setPassword(const std::string& newPassword) {
 }
 
 std::string User::hashPassword(const std::string& password) {
-    unsigned char hash[SHA256_DIGEST_LENGTH];
-    SHA256_CTX sha256;
-    SHA256_Init(&sha256);
-    SHA256_Update(&sha256, password.c_str(), password.size());
-    SHA256_Final(hash, &sha256);
+    // Create a context for hashing
+    EVP_MD_CTX* mdctx = EVP_MD_CTX_new();
+    const EVP_MD* md = EVP_sha256();
+    unsigned char hash[EVP_MAX_MD_SIZE];
+    unsigned int hashLen;
 
-    std::stringstream ss;
-    for (unsigned char i : hash) {
-        ss << std::hex << std::setw(2) << std::setfill('0') << (int)i;
+    if (mdctx == nullptr) {
+        std::cerr << "Error creating EVP context\n";
+        return "";
     }
+
+    // Initialize the hash context
+    if (EVP_DigestInit_ex(mdctx, md, nullptr) != 1) {
+        std::cerr << "Error initializing digest\n";
+        EVP_MD_CTX_free(mdctx);
+        return "";
+    }
+
+    // Update the context with the password data
+    if (EVP_DigestUpdate(mdctx, password.c_str(), password.size()) != 1) {
+        std::cerr << "Error updating digest\n";
+        EVP_MD_CTX_free(mdctx);
+        return "";
+    }
+
+    // Finalize the hash computation
+    if (EVP_DigestFinal_ex(mdctx, hash, &hashLen) != 1) {
+        std::cerr << "Error finalizing digest\n";
+        EVP_MD_CTX_free(mdctx);
+        return "";
+    }
+
+    // Convert the hash to a hex string
+    std::stringstream ss;
+    for (unsigned int i = 0; i < hashLen; i++) {
+        ss << std::hex << std::setw(2) << std::setfill('0') << (int)hash[i];
+    }
+
+    // Clean up
+    EVP_MD_CTX_free(mdctx);
 
     return ss.str();
 }

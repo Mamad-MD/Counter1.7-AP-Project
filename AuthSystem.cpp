@@ -1,4 +1,5 @@
 #include "AuthSystem.h"
+#include "GameManager.h"
 #include <filesystem>
 #include <fstream>
 
