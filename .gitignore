@@ -1,0 +1,11 @@
+# Ignore Visual Studio folders
+.vs/
+
+# Ignore build folders or custom project folders
+Counter1.7-AP-Project/
+
+# Ignore Visual Studio project files
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
