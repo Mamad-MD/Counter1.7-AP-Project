@@ -1,8 +1,10 @@
+﻿// =================== GunTests.cpp ===================
 #include "Gun.h"
 #include <cassert>
 #include <iostream>
 #include <stdexcept>
 
+// تست پایه برای ساخت اسلحه
 void testGunCreation() {
     std::cout << "Running testGunCreation... ";
     Gun ak47(30, 2700.0f, GunType::AK47, 36.0f);
@@ -14,16 +16,15 @@ void testGunCreation() {
     std::cout << "Passed!\n";
 }
 
+// تست شرایط مرزی و ورودی نامعتبر
 void testGunEdgeCases() {
     std::cout << "Running testGunEdgeCases... ";
-    // Test with zero bullets
     Gun emptyGun(0, 100.0f, GunType::GLOCK, 15.0f);
     assert(emptyGun.getBulletCount() == 0);
 
-    // Test negative values (should throw exception)
     try {
         Gun invalidGun(-5, -100.0f, GunType::DEAGLE, -10.0f);
-        assert(false); // Should not reach here
+        assert(false);
     }
     catch (const std::invalid_argument& e) {
         assert(std::string(e.what()) == "Negative values are not allowed");
@@ -31,6 +32,7 @@ void testGunEdgeCases() {
     std::cout << "Passed!\n";
 }
 
+// تست عملگرهای مقایسه و به‌روزرسانی
 void testGunOperators() {
     std::cout << "Running testGunOperators... ";
     Gun gun1(30, 2700.0f, GunType::AK47, 36.0f);
@@ -45,6 +47,7 @@ void testGunOperators() {
     std::cout << "Passed!\n";
 }
 
+// تست شمارنده استاتیک
 void testGunStaticCounter() {
     std::cout << "Running testGunStaticCounter... ";
     int initialCount = Gun::getTotalGunsCreated();
@@ -52,7 +55,6 @@ void testGunStaticCounter() {
         Gun tempGun(10, 1000.0f, GunType::GLOCK, 15.0f);
         assert(Gun::getTotalGunsCreated() == initialCount + 1);
     }
-    // Counter shouldn't decrease when gun is destroyed
     assert(Gun::getTotalGunsCreated() == initialCount + 1);
     std::cout << "Passed!\n";
 }

@@ -1,3 +1,4 @@
+﻿// =================== IntegrationTests.cpp ===================
 #include "GameManager.h"
 #include "Gun.h"
 #include "Terrorist.h"
@@ -5,8 +6,9 @@
 #include <cassert>
 #include <iostream>
 #include <memory>
-#include <thread>
+#include <fstream>
 
+// تست ایجاد بازی و تیم‌ها
 void testGameSetup() {
     std::cout << "Running testGameSetup... ";
     auto gameManager = GameManager::getInstance();
@@ -17,7 +19,6 @@ void testGameSetup() {
     assert(gameManager->getCTs().size() == 5);
     assert(gameManager->getMatchName() == "Dust2");
 
-    // Check at least one terrorist is bomb carrier
     bool hasBombCarrier = false;
     for (const auto& terrorist : gameManager->getTerrorists()) {
         if (terrorist->getBombCarrierStatus()) {
@@ -29,47 +30,42 @@ void testGameSetup() {
     std::cout << "Passed!\n";
 }
 
+// تست مبارزه میان دو بازیکن
 void testGameCombat() {
     std::cout << "Running testGameCombat... ";
     auto gameManager = GameManager::getInstance();
     gameManager->resetGame();
 
-    // Setup simple game with 1v1
     gameManager->setupMatch("Dust2", 1, 1, 800.0f);
-
-    // Give weapons to players
     auto ak47 = std::make_shared<Gun>(30, 2700.0f, GunType::AK47, 36.0f);
     auto m4a1 = std::make_shared<Gun>(30, 3100.0f, GunType::M4A1, 33.0f);
 
     gameManager->getTerrorists()[0]->buyGun(ak47);
     gameManager->getCTs()[0]->buyGun(m4a1);
 
-    // Run one round of combat
     auto terrorist = gameManager->getTerrorists()[0];
     auto ct = gameManager->getCTs()[0];
 
     float initialTHealth = terrorist->getHealth();
     float initialCTHealth = ct->getHealth();
 
-    // Terrorist should win (AK47 damage > M4A1)
     gameManager->startGame();
 
     assert(!ct->isPlayerAlive());
     assert(terrorist->isPlayerAlive());
-    assert(terrorist->getHealth() < initialTHealth); // Should have taken some damage
+    assert(terrorist->getHealth() < initialTHealth);
     std::cout << "Passed!\n";
 }
 
+// تست ثبت تاریخچه بازی‌ها
 void testGameHistory() {
     std::cout << "Running testGameHistory... ";
     auto gameManager = GameManager::getInstance();
     gameManager->resetGame();
 
-    // Clear history file
     std::ofstream clearFile("game_history.txt", std::ios::trunc);
     clearFile.close();
 
-    // Simulate some games
     gameManager->endGame("CTs Win!");
     gameManager->endGame("Terrorists Win!");
     gameManager->endGame("CTs Win!");

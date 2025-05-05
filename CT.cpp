@@ -28,6 +28,7 @@ void CT::setDefuseKit(bool status) {
     }
 }
 
+
 void CT::displayInfo() const {
     Player::displayInfo();
     std::cout << "Defuse Kit: " << (hasDefuseKit ? "Yes" : "No") << "\n"

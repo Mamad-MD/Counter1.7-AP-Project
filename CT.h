@@ -13,6 +13,8 @@ public:
     std::string getTeam() const;
     void setDefuseKit(bool status);
     void defuseBomb();
+    bool getDefuseKitStatus() const { return hasDefuseKit; }
+    bool getBombDefuseStatus() const { return hasDefusedBomb; }
 
     void displayInfo() const override;
     float calculatePower() const override;
