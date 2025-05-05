@@ -10,3 +10,4 @@ Counter1.7-AP-Project/
 *.vcxproj.filters
 *.vcxproj.user
 Conter_S.*/
+out/
