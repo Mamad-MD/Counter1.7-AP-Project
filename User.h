@@ -1,28 +1,3 @@
-//// User.h
-//#pragma once
-//#include <string>
-//
-//class User {
-//private:
-//    std::string username;
-//    std::string nickname;
-//    std::string passwordHash;
-//    int winsCount;
-//
-//public:
-//    User();
-//    User(std::string username, std::string nickname, std::string password);
-//
-//    bool authenticate(std::string password) const;
-//    void incrementWins();
-//    void saveToFile() const;
-//    static User loadFromFile(std::string username);
-//
-//    // Getters
-//    std::string getUsername() const;
-//    std::string getNickname() const;
-//    int getWinsCount() const;
-//};
 #pragma once
 #include <string>
 #include <vector>

@@ -11,3 +11,5 @@ Counter1.7-AP-Project/
 *.vcxproj.user
 Conter_S.*/
 out/
+users/
+x64/
