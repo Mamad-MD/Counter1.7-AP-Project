@@ -1,25 +1,3 @@
-//// AuthSystem.h
-//#pragma once
-//#include "User.h"
-//#include <vector>
-//
-//class AuthSystem {
-//private:
-//    std::vector<User> users;
-//    User* currentUser;
-//
-//public:
-//    AuthSystem();
-//    bool registerUser(std::string username, std::string nickname, std::string password);
-//    bool login(std::string username, std::string password);
-//    void logout();
-//    User* getCurrentUser() const;
-//
-//private:
-//    std::string hashPassword(std::string password) const;
-//    void loadUsers();
-//    void saveUsers() const;
-//};
 #pragma once
 #include "User.h"
 #include <vector>

@@ -1,25 +1,3 @@
-
-
-// CT.h
-//#pragma once
-//#include "Player.h"
-//
-//class CT : public Player {
-//private:
-//    bool hasDefuseKit;
-//    bool hasDefusedBomb;
-//
-//public:
-//    CT();
-//    CT(const CT& other);
-//    CT(std::string name, bool isAI, float initialMoney);
-//
-//    void defuseBomb();
-//    void setDefuseKit(bool status);
-//    bool getDefuseKitStatus() const;
-//    bool getBombDefuseStatus() const;
-//
-// #pragma once
 #include "Player.h"
 
 class CT : public Player {
